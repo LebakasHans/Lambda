@@ -33,7 +33,29 @@ public class Main {
 
         numberTester.testFile();
          */
+        CalculationOperation rationalAdd, rationalSubstract,  rationalMultiply,  rationalDivide;
 
+        rationalAdd = ((x, y) -> {
+            Number result = new Number();
+            result.setA(x.getA() + y.getA());
+            return result;
+        });
+        rationalSubstract = ((x, y) -> {
+            Number result = new Number();
+            result.setA(x.getA() - y.getA());
+            return result;
+        });
+        rationalMultiply = ((x, y) -> {
+            Number result = new Number();
+            result.setA(x.getA() * y.getA());
+            return result;
+        });
+        rationalDivide = ((x, y) -> {
+            Number result = new Number();
+            result.setA(x.getA() / y.getA());
+            return result;
+        });
+        AbstractCalculator rationalCalculator = new RationalCalculator(rationalAdd,rationalSubstract,rationalMultiply,rationalDivide);
 
     }
 }
