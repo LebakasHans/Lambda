@@ -35,21 +35,21 @@ public class Main {
          */
         CalculationOperation rationalAdd, rationalSubstract,  rationalMultiply,  rationalDivide;
 
-        rationalAdd = ((x, y) -> {
+        rationalAdd = (x, y) -> {
             Number result = new Number();
             result.setA(x.getA() + y.getA());
             return result;
-        });
-        rationalSubstract = ((x, y) -> {
+        };
+        rationalSubstract = (x, y) -> {
             Number result = new Number();
             result.setA(x.getA() - y.getA());
             return result;
-        });
-        rationalMultiply = ((x, y) -> {
+        };
+        rationalMultiply = (x, y) -> {
             Number result = new Number();
             result.setA(x.getA() * y.getA());
             return result;
-        });
+        };
         rationalDivide = ((x, y) -> {
             Number result = new Number();
             result.setA(x.getA() / y.getA());
@@ -57,5 +57,19 @@ public class Main {
         });
         AbstractCalculator rationalCalculator = new RationalCalculator(rationalAdd,rationalSubstract,rationalMultiply,rationalDivide);
 
+        CalculationOperation vectorAdd, vectorSubstract,  vectorMultiply,  vectorDivide;
+
+        vectorAdd = (x, y) -> {
+            Number result = new Number();
+            result.setA(x.getA() + y.getA());
+            result.setB(x.getB() + y.getB());
+            return result;
+        };
+        vectorAdd = (x, y) -> {
+            Number result = new Number();
+            result.setA(x.getA() + y.getA());
+            result.setB(x.getB() + y.getB());
+            return result;
+        };
     }
 }
