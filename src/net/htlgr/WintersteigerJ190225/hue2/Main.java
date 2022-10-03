@@ -1,8 +1,13 @@
 package net.htlgr.WintersteigerJ190225.hue2;
 
+import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class Main {
+    private static AbstractCalculator rationalCalculator;
+    private static AbstractCalculator vectorCalculator;
+    private static AbstractCalculator complexCalculator;
+
     public static void main(String[] args) {
         //HalloJavamitForEach halloJavamitForEach = new HalloJavamitForEach();
         //halloJavamitForEach.differentForEach();
@@ -33,14 +38,26 @@ public class Main {
 
         numberTester.testFile();
          */
-        CalculationOperation rationalAdd, rationalSubstract,  rationalMultiply,  rationalDivide;
+        setUpCalculators();
+
+        Scanner sc = new Scanner(System.in);
+        Double next = sc.nextDouble();
+        while (next != 4){
+            System.out.println("Choose calculator");
+            System.out.println("1 - Rational calculator");
+            System.out.println("2 - Vector calculator");
+        }
+    }
+
+    private static void setUpCalculators(){
+        CalculationOperation rationalAdd, rationalSubtract,  rationalMultiply,  rationalDivide;
 
         rationalAdd = (x, y) -> {
             Number result = new Number();
             result.setA(x.getA() + y.getA());
             return result;
         };
-        rationalSubstract = (x, y) -> {
+        rationalSubtract = (x, y) -> {
             Number result = new Number();
             result.setA(x.getA() - y.getA());
             return result;
@@ -55,9 +72,9 @@ public class Main {
             result.setA(x.getA() / y.getA());
             return result;
         });
-        AbstractCalculator rationalCalculator = new RationalCalculator(rationalAdd,rationalSubstract,rationalMultiply,rationalDivide);
+        rationalCalculator = new RationalCalculator(rationalAdd,rationalSubtract,rationalMultiply,rationalDivide);
 
-        CalculationOperation vectorAdd, vectorSubstract,  vectorMultiply,  vectorDivide;
+        CalculationOperation vectorAdd, vectorSubtract,  vectorMultiply,  vectorDivide;
 
         vectorAdd = (x, y) -> {
             Number result = new Number();
@@ -65,7 +82,7 @@ public class Main {
             result.setB(x.getB() + y.getB());
             return result;
         };
-        vectorSubstract = (x, y) -> {
+        vectorSubtract = (x, y) -> {
             Number result = new Number();
             result.setA(x.getA() - y.getA());
             result.setB(x.getB() - y.getB());
@@ -84,8 +101,42 @@ public class Main {
         //dividing Vectors is impossible
         //TODO find a way to do the impossible
         vectorDivide = (x, y) -> {
-          return null;
+            return null;
         };
-        AbstractCalculator vectorCalculator = new RationalCalculator(vectorAdd,vectorSubstract,vectorMultiply,vectorDivide);
+        vectorCalculator = new RationalCalculator(vectorAdd,vectorSubtract,vectorMultiply,vectorDivide);
+
+        CalculationOperation complexAdd, complexSubtract, complexMultiply, complexDivide;
+
+        complexAdd = (x, y) -> {
+            Number result = new Number();
+            result.setA(x.getA() + y.getA());
+            result.setB(x.getB() + y.getB());
+            return result;
+        };
+
+        complexSubtract = (x, y) -> {
+            Number result = new Number();
+            result.setA(x.getA() - y.getA());
+            result.setB(x.getB() - y.getB());
+            return result;
+        };
+
+        complexMultiply = (x, y) -> {
+            Number result = new Number();
+            result.setA(x.getA() * y.getA() - x.getB() * y.getB());
+            result.setB(x.getA() * y.getB() + x.getB() * y.getA());
+            return result;
+        };
+
+        //for better understanding see: https://www.cuemath.com/numbers/division-of-complex-numbers/
+        //getA() is the real number
+        //getB() is the complex number
+        complexDivide = (x, y) -> {
+            Number result = new Number();
+            result.setA((x.getA() * y.getA() + x.getB() * y.getB())/(Math.pow(y.getA(),2) + Math.pow(y.getB(), 2)));
+            result.setB((x.getB() * y.getA() - x.getA() * y.getB())/(Math.pow(y.getA(),2) + Math.pow(y.getB(), 2)));
+            return result;
+        };
+        complexCalculator = new ComplexCalculator(complexAdd, complexSubtract, complexMultiply, complexDivide);
     }
 }

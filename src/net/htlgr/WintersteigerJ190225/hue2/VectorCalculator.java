@@ -2,8 +2,8 @@ package net.htlgr.WintersteigerJ190225.hue2;
 
 public class VectorCalculator extends AbstractCalculator{
 
-    public VectorCalculator(CalculationOperation add, CalculationOperation substract, CalculationOperation multiply, CalculationOperation divide) {
-        super(add, substract, multiply, divide);
+    public VectorCalculator(CalculationOperation add, CalculationOperation subtract, CalculationOperation multiply, CalculationOperation divide) {
+        super(add, subtract, multiply, divide);
     }
 
     @Override
@@ -12,8 +12,8 @@ public class VectorCalculator extends AbstractCalculator{
     }
 
     @Override
-    public Number substract(Number a, Number b) {
-        return substract.calc(a ,b);
+    public Number subtract(Number a, Number b) {
+        return subtract.calc(a ,b);
     }
 
     @Override
