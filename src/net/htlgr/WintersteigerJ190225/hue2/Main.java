@@ -65,11 +65,27 @@ public class Main {
             result.setB(x.getB() + y.getB());
             return result;
         };
-        vectorAdd = (x, y) -> {
+        vectorSubstract = (x, y) -> {
             Number result = new Number();
-            result.setA(x.getA() + y.getA());
-            result.setB(x.getB() + y.getB());
+            result.setA(x.getA() - y.getA());
+            result.setB(x.getB() - y.getB());
             return result;
         };
+
+        //returns the Dot Product of two vectors
+        vectorMultiply = (x, y) -> {
+            Number result = new Number();
+            double productA = x.getA() * y.getA();
+            double productB = x.getB() * y.getB();
+            result.setA(productA + productB);
+            return result;
+        };
+
+        //dividing Vectors is impossible
+        //TODO find a way to do the impossible
+        vectorDivide = (x, y) -> {
+          return null;
+        };
+        AbstractCalculator vectorCalculator = new RationalCalculator(vectorAdd,vectorSubstract,vectorMultiply,vectorDivide);
     }
 }
