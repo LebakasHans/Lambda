@@ -41,12 +41,25 @@ public class Main {
         setUpCalculators();
 
         Scanner sc = new Scanner(System.in);
-        Double next = sc.nextDouble();
-        while (next != 4){
+        int next = sc.nextInt();
+        double input;
+        Number firstNumber = new Number();
+        Number secondNumber = new Number();
+        do{
             System.out.println("Choose calculator");
             System.out.println("1 - Rational calculator");
             System.out.println("2 - Vector calculator");
-        }
+            System.out.println("3 - Complex calculator");
+            System.out.println("4 - Exit program");
+            switch (next){
+                case 1:
+                    System.out.println("Enter first number:");
+                    firstNumber.setA(sc.nextDouble());
+                    System.out.println("Enter second number:");
+                    secondNumber.setA(sc.nextDouble());
+
+            }
+        }while (next != 4);
     }
 
     private static void setUpCalculators(){
