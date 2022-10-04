@@ -57,9 +57,18 @@ public class Main {
                     firstNumber.setA(sc.nextDouble());
                     System.out.println("Enter second number:");
                     secondNumber.setA(sc.nextDouble());
-
+                    showInvoiceTypes();
+                    next = sc.nextInt();
             }
         }while (next != 4);
+    }
+
+    private static void showInvoiceTypes() {
+        System.out.println("1 - Add");
+        System.out.println("2 - Subtract");
+        System.out.println("3 - Multiply");
+        System.out.println("4 - Divide");
+        System.out.println("5 - New Numbers");
     }
 
     private static void setUpCalculators(){
@@ -102,19 +111,18 @@ public class Main {
             return result;
         };
 
-        //returns the Dot Product of two vectors
+        //don´t know how to do
         vectorMultiply = (x, y) -> {
+            return null;
+        };
+
+        //dot Product
+        vectorDivide = (x, y) -> {
             Number result = new Number();
             double productA = x.getA() * y.getA();
             double productB = x.getB() * y.getB();
             result.setA(productA + productB);
             return result;
-        };
-
-        //dividing Vectors is impossible
-        //TODO find a way to do the impossible
-        vectorDivide = (x, y) -> {
-            return null;
         };
         vectorCalculator = new RationalCalculator(vectorAdd,vectorSubtract,vectorMultiply,vectorDivide);
 
