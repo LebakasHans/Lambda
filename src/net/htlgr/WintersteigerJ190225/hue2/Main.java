@@ -1,7 +1,6 @@
 package net.htlgr.WintersteigerJ190225.hue2;
 
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class Main {
     private static AbstractCalculator rationalCalculator;
@@ -41,29 +40,109 @@ public class Main {
         setUpCalculators();
 
         Scanner sc = new Scanner(System.in);
-        int next = sc.nextInt();
+        int next;
+        AbstractCalculator calculator = null;
         double input;
         Number firstNumber = new Number();
         Number secondNumber = new Number();
+        Number result = null;
         do{
             System.out.println("Choose calculator");
             System.out.println("1 - Rational calculator");
             System.out.println("2 - Vector calculator");
             System.out.println("3 - Complex calculator");
             System.out.println("4 - Exit program");
-            switch (next){
+            next = sc.nextInt();
+            int calcNumber = next;
+            if (next == 4){
+                break;
+            }
+            do {
+            switch (calcNumber){
                 case 1:
                     System.out.println("Enter first number:");
                     firstNumber.setA(sc.nextDouble());
                     System.out.println("Enter second number:");
                     secondNumber.setA(sc.nextDouble());
-                    showInvoiceTypes();
-                    next = sc.nextInt();
+                    break;
+                case 2:
+                    System.out.println("Enter first number of first Vector:");
+                    firstNumber.setA(sc.nextDouble());
+                    System.out.println("Enter second number of first Vector:");
+                    firstNumber.setB(sc.nextDouble());
+                    System.out.println("Enter first number of second Vector:");
+                    secondNumber.setA(sc.nextDouble());
+                    System.out.println("Enter second number of second Vector:");
+                    secondNumber.setB(sc.nextDouble());
+                    break;
+                case 3:
+                    System.out.println("Enter real number of first complex Number");
+                    firstNumber.setA(sc.nextDouble());
+                    System.out.println("Enter imaginary number of first complex Number");
+                    firstNumber.setB(sc.nextDouble());
+                    System.out.println("Enter real number of second complex Number");
+                    secondNumber.setA(sc.nextDouble());
+                    System.out.println("Enter imaginary number of second complex Number");
+                    secondNumber.setB(sc.nextDouble());
+                    break;
             }
-        }while (next != 4);
+
+                showInvoiceTypes();
+                next = sc.nextInt();
+                if (next == 5){
+                    continue;
+                }
+                calculator = getNumbersAndCalc(sc, calcNumber, calculator, firstNumber, secondNumber);
+            }while (next == 5);
+            result = calculate(next, calculator, firstNumber, secondNumber);
+            showResult(result);
+        }while (true);
+    }
+
+    private static void showResult(Number result) {
+        System.out.println("--------------------------");
+        System.out.println("Solution :");
+        System.out.println("a = " + result.getA());
+        System.out.println("b = " + result.getB());
+        System.out.println("--------------------------");
+    }
+
+    private static Number calculate(int next, AbstractCalculator calculator, Number firstNumber, Number secondNumber) {
+        Number result = null;
+        switch (next) {
+            case 1:
+                result = calculator.add(firstNumber, secondNumber);
+                break;
+            case 2:
+                result = calculator.subtract(firstNumber, secondNumber);
+                break;
+            case 3:
+                result = calculator.multiply(firstNumber, secondNumber);
+                break;
+            case 4:
+                result = calculator.divide(firstNumber, secondNumber);
+                break;
+        }
+        return result;
+    }
+
+    private static AbstractCalculator getNumbersAndCalc(Scanner sc, int next, AbstractCalculator calculator, Number firstNumber, Number secondNumber) {
+        switch (next){
+            case 1:
+                calculator = rationalCalculator;
+                break;
+            case 2:
+                calculator = vectorCalculator;
+                break;
+            case 3:
+                calculator = complexCalculator;
+                break;
+        }
+        return calculator;
     }
 
     private static void showInvoiceTypes() {
+        System.out.println("Choose Operation:");
         System.out.println("1 - Add");
         System.out.println("2 - Subtract");
         System.out.println("3 - Multiply");
@@ -111,9 +190,12 @@ public class Main {
             return result;
         };
 
-        //don´t know how to do
         vectorMultiply = (x, y) -> {
-            return null;
+            Number result = new Number();
+            double productA = x.getA() * y.getA();
+            double productB = x.getB() * y.getB();
+            result.setA(productA - productB);
+            return result;
         };
 
         //dot Product
@@ -149,13 +231,10 @@ public class Main {
             return result;
         };
 
-        //for better understanding see: https://www.cuemath.com/numbers/division-of-complex-numbers/
-        //getA() is the real number
-        //getB() is the complex number
         complexDivide = (x, y) -> {
             Number result = new Number();
-            result.setA((x.getA() * y.getA() + x.getB() * y.getB())/(Math.pow(y.getA(),2) + Math.pow(y.getB(), 2)));
-            result.setB((x.getB() * y.getA() - x.getA() * y.getB())/(Math.pow(y.getA(),2) + Math.pow(y.getB(), 2)));
+            result.setA(((x.getA() * y.getA()) + (x.getB() * y.getB()))/(Math.pow(y.getA(),2) + Math.pow(y.getB(), 2)));
+            result.setB(((x.getB() * y.getA()) - (x.getA() * y.getB()))/(Math.pow(y.getA(),2) + Math.pow(y.getB(), 2)));
             return result;
         };
         complexCalculator = new ComplexCalculator(complexAdd, complexSubtract, complexMultiply, complexDivide);
